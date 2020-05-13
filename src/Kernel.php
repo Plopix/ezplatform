@@ -46,4 +46,22 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
     }
+    
+    public function getCacheDir()
+    {
+        if (!empty($_SERVER['SYMFONY_TMP_DIR'])) {
+            return rtrim($_SERVER['SYMFONY_TMP_DIR'], '/') . '/var/cache/' . $this->getEnvironment();
+        }
+
+        return dirname(__DIR__) . '/var/cache/' . $this->getEnvironment();
+    }
+
+    public function getLogDir()
+    {
+        if (!empty($_SERVER['SYMFONY_TMP_DIR'])) {
+            return rtrim($_SERVER['SYMFONY_TMP_DIR'], '/') . '/var/logs';
+        }
+
+        return dirname(__DIR__) . '/var/logs';
+    }
 }
